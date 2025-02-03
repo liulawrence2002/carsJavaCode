@@ -8,8 +8,8 @@ function Home() {
             <div className="bg-primary text-white text-center py-5">
                 <h1>Welcome to the Grant Application Portal</h1>
                 <p>Explore funding opportunities and manage your applications.</p>
-                <Link to="/funding-opportunities" className="btn btn-light btn-lg me-1">View Funding Opportunities</Link>   
-                <Link to="/news-announcements" className="btn btn-light btn-lg">News and Announcements</Link>
+                <Link to="/funding-opportunities" className="btn btn-light btn-lg me-1 me-5">View Funding Opportunities</Link>   
+                <Link to="/news-announcements" className="btn btn-light btn-lg me-5">News and Announcements</Link>
             </div>
 
             {/* Programs Section */}

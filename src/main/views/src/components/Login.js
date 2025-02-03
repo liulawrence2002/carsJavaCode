@@ -39,7 +39,7 @@ function Login({ onLogin }) {
             <form onSubmit={handleLogin} className="card p-4">
                 <h2 className="text-center mb-4">Login</h2>
                 {error && <div className="alert alert-danger">{error}</div>}
-                <div className="form-group">
+                <div className="form-group  mb-2 me-2">
                     <input
                         type="text"
                         className="form-control"
@@ -49,7 +49,7 @@ function Login({ onLogin }) {
                         required
                     />
                 </div>
-                <div className="form-group">
+                <div className="form-group mb-2 me-2">
                     <input
                         type="password"
                         className="form-control"
@@ -59,7 +59,7 @@ function Login({ onLogin }) {
                         required
                     />
                 </div>
-                <button type="submit" className="btn btn-primary w-100">Login</button>
+                <button type="submit" className="btn btn-primary w-100 mb-2 me-2">Login</button>
             </form>
         </div>
     );
