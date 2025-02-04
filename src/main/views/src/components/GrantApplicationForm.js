@@ -3,12 +3,13 @@ import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 
 function GrantApplicationForm() {
-    const { id } = useParams();
+    const { id,program,fy } = useParams();
     const [step, setStep] = useState(1);
     //const [userId, setUserId] = useState('');
     const [projectTitle, setProjectTitle] = useState('');
     const [projectType, setProjectType] = useState('');
-    const [proposalId, setProposalId] = useState('');
+	const [proposalId, setProposalId] = useState('');
+    const [countApps, setCountApps] = useState(0);
     const [contactInfo, setContactInfo] = useState('');
     const [projectDetails, setProjectDetails] = useState('');
     const [supportDocuments, setSupportDocuments] = useState(null);
@@ -20,6 +21,8 @@ function GrantApplicationForm() {
 
     const [grantApplication, setGrantApplication] = useState(null);
     const [fundingOpportunity, setFundingOpportunity] = useState(null);
+	const [fundingOpportunityLoaded, setFundingOpportunityLoaded] = useState(false);
+
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
@@ -31,10 +34,10 @@ function GrantApplicationForm() {
     // Compute applicationNumber dynamically
     const applicationNumber = applicationId && fundingOpportunity
         ? fundingOpportunity.program === 'Research'
-            ? `RP${((fundingOpportunity.fy - 2000) * 10000 + applicationId).toString()}`
+            ? `RP${((fundingOpportunity.fy - 2000) * 10000 + countApps).toString()}`
             : fundingOpportunity.program === 'Recruitment'
-            ? `RR${((fundingOpportunity.fy - 2000) * 10000 + applicationId).toString()}`
-            : `PD${((fundingOpportunity.fy - 2000) * 10000 + applicationId).toString()}`
+            ? `RR${((fundingOpportunity.fy - 2000) * 10000 + countApps).toString()}`
+            : `PD${((fundingOpportunity.fy - 2000) * 10000 + countApps).toString()}`
         : null;
 
     // Check if the user is logged in
@@ -73,7 +76,7 @@ function GrantApplicationForm() {
             let method; // Declare method without a default value
             let data = {
                 userId:localStorage.getItem('carsuserid'),
-                proposalId,
+				proposalId, // Add proposalId here
                 projectTitle,
                 projectType,
                 contactInfo,
@@ -132,6 +135,7 @@ function GrantApplicationForm() {
             try {
                 const response = await axios.get(`http://localhost:8080/api/funding-opportunities/${id}`);
                 setFundingOpportunity(response.data);
+				setFundingOpportunityLoaded(true);
                 setLoading(false);
             } catch (err) {
                 setError(err.message);
@@ -141,6 +145,38 @@ function GrantApplicationForm() {
 
         fetchFundingOpportunity();
     }, [id]);
+	
+	useEffect(() => {
+		if (fundingOpportunityLoaded) {
+			// Fetch the FundingOpportunity object from the backend
+		    const fetchAppCountPerFundingOpportunity = async () => {
+		        try {
+		            const response = await axios.get(`http://localhost:8080/api/funding-opportunities/getCountApplicationByFundingOpportunity/${id}?program=${fundingOpportunity.program}&fiscalyear=${fundingOpportunity.fy}`);
+		            setCountApps(response.data);
+					console.log(response.data);
+					console.log(countApps);
+					
+					// Compute applicationNumber dynamically
+					const newApplicationNumber = fundingOpportunity
+					    ? fundingOpportunity?.program === 'Research'
+					        ? `RP${((fundingOpportunity?.fy - 2000) * 10000 + response.data).toString()}`
+					        : fundingOpportunity?.program === 'Recruitment'
+					        ? `RR${((fundingOpportunity?.fy - 2000) * 10000 + response.data).toString()}`
+					        : `PD${((fundingOpportunity?.fy - 2000) * 10000 + response.data).toString()}`
+					    : null;
+					if (newApplicationNumber){
+						setProposalId(newApplicationNumber);
+					}
+					
+		        } catch (err) {
+		            setError(err.message);
+		        }
+		    };
+
+	
+		    fetchAppCountPerFundingOpportunity();
+		}
+	}, [id,fundingOpportunity?.program,fundingOpportunity?.fy]);
 
     useEffect(() => {
         // Fetch the GrantApplication object from the backend only if step > 1
@@ -182,7 +218,7 @@ function GrantApplicationForm() {
                 <span style={{ color: 'blue', marginLeft: '10px' }}>{fundingOpportunity.program}</span>
             </label>
             <label style={{ fontWeight: 'bold', marginLeft: '10px' }}>
-                Cycle:
+                Mechanism:
                 <span style={{ color: 'blue', marginLeft: '10px' }}>{fundingOpportunity.title}</span>
             </label>
             <label style={{ fontWeight: 'bold', marginLeft: '10px' }}>

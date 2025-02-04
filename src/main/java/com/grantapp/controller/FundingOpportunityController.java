@@ -1,6 +1,7 @@
 package com.grantapp.controller;
 
 import com.grantapp.model.FundingOpportunity;
+import com.grantapp.model.GrantApplication;
 import com.grantapp.service.FundingOpportunityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -28,5 +29,17 @@ public class FundingOpportunityController {
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+    
+    @GetMapping("/getCountApplicationByFundingOpportunity/{id}")
+    public Integer getCountApplicationByFundingOpportunity(
+        @PathVariable("id") Long id,
+        @RequestParam("program") String program,
+        @RequestParam("fiscalyear") int fiscalYear) {
+    	System.out.println(id);
+    	System.out.println(program);
+    	System.out.println(fiscalYear);
+    	//GrantApplication.findAllBy
+        return 12;
     }
 }
