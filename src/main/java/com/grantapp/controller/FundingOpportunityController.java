@@ -30,16 +30,5 @@ public class FundingOpportunityController {
             return ResponseEntity.notFound().build();
         }
     }
-    
-    @GetMapping("/getCountApplicationByFundingOpportunity/{id}")
-    public Integer getCountApplicationByFundingOpportunity(
-        @PathVariable("id") Long id,
-        @RequestParam("program") String program,
-        @RequestParam("fiscalyear") int fiscalYear) {
-    	System.out.println(id);
-    	System.out.println(program);
-    	System.out.println(fiscalYear);
-    	//GrantApplication.findAllBy
-        return 12;
-    }
+
 }

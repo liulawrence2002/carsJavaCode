@@ -2,8 +2,10 @@ package com.grantapp.service;
 
 import com.grantapp.model.GrantApplication;
 import com.grantapp.model.CarsUser;
+import com.grantapp.model.FundingOpportunity;
 import com.grantapp.repository.CarsUserRepository;
 import com.grantapp.repository.GrantApplicationRepository;
+import com.grantapp.repository.FundingOpportunityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +17,8 @@ public class GrantApplicationService {
     private GrantApplicationRepository grantApplicationRepository;
     @Autowired
     private CarsUserRepository carsUserRepository;
+    @Autowired
+    private FundingOpportunityRepository fundingOpportunityRepository;
 
     public GrantApplication save(GrantApplication grantApplication) {
         //System.out.println(grantApplication.getUserId());
@@ -55,5 +59,10 @@ public class GrantApplicationService {
 
     public List<GrantApplication> findAllByUser_Id(Long id) {
         return grantApplicationRepository.findAllByUser_Id(id); // Directly return the list
+    }
+    
+    public List<GrantApplication> findGrantApplicationsByOpportunitiesAndUser(List<FundingOpportunity> opportunities, CarsUser user) {
+        List<GrantApplication> grantApplication = grantApplicationRepository.findAllByOpportunityInAndUser(opportunities,user);
+        return grantApplicationRepository.findAllByOpportunityInAndUser(opportunities, user);
     }
 }

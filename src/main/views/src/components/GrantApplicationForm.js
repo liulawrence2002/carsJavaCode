@@ -37,7 +37,7 @@ function GrantApplicationForm() {
             ? `RP${((fundingOpportunity.fy - 2000) * 10000 + countApps).toString()}`
             : fundingOpportunity.program === 'Recruitment'
             ? `RR${((fundingOpportunity.fy - 2000) * 10000 + countApps).toString()}`
-            : `PD${((fundingOpportunity.fy - 2000) * 10000 + countApps).toString()}`
+            : `DP${((fundingOpportunity.fy - 2000) * 10000 + countApps).toString()}`
         : null;
 
     // Check if the user is logged in
@@ -151,7 +151,7 @@ function GrantApplicationForm() {
 			// Fetch the FundingOpportunity object from the backend
 		    const fetchAppCountPerFundingOpportunity = async () => {
 		        try {
-		            const response = await axios.get(`http://localhost:8080/api/funding-opportunities/getCountApplicationByFundingOpportunity/${id}?program=${fundingOpportunity.program}&fiscalyear=${fundingOpportunity.fy}`);
+		            const response = await axios.get(`http://localhost:8080/api/grant-applications/getCountApplicationByFundingOpportunity/${id}?program=${fundingOpportunity.program}&fiscalyear=${fundingOpportunity.fy}&userid=${localStorage.getItem('carsuserid')}`);
 		            setCountApps(response.data);
 					console.log(response.data);
 					console.log(countApps);
@@ -162,7 +162,7 @@ function GrantApplicationForm() {
 					        ? `RP${((fundingOpportunity?.fy - 2000) * 10000 + response.data).toString()}`
 					        : fundingOpportunity?.program === 'Recruitment'
 					        ? `RR${((fundingOpportunity?.fy - 2000) * 10000 + response.data).toString()}`
-					        : `PD${((fundingOpportunity?.fy - 2000) * 10000 + response.data).toString()}`
+					        : `DP${((fundingOpportunity?.fy - 2000) * 10000 + response.data).toString()}`
 					    : null;
 					if (newApplicationNumber){
 						setProposalId(newApplicationNumber);

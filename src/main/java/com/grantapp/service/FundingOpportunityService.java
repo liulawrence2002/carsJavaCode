@@ -19,4 +19,8 @@ public class FundingOpportunityService {
     public FundingOpportunity findById(Long id) {
         return fundingOpportunityRepository.findById(id).orElse(null);
     }
+    
+    public List<FundingOpportunity> findAllByProgram(String program) {
+        return fundingOpportunityRepository.findAllByProgram(program);
+    }
 }

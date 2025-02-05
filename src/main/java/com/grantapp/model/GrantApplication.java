@@ -47,6 +47,13 @@ public class GrantApplication {
     private CarsUser user;
     @Transient
     private Long userId;
+    
+    @ManyToOne
+    @JoinColumn(name = "opportunity_id")
+    private FundingOpportunity opportunity;
+    @Transient
+    private Long opportunityId;
+    
 
     private String status;
 
@@ -65,7 +72,15 @@ public class GrantApplication {
     public void setUserId(Long userId) {
         this.userId = userId;
     }
+    
+    public Long getOpportunityId() {
+        return opportunityId;
+    }
 
+    public void setOpportunityId(Long opportunityId) {
+        this.opportunityId = opportunityId;
+    }
+    
     public String getProposalId() {
         return proposalId;
     }

@@ -2,7 +2,10 @@ package com.grantapp.controller;
 
 import com.grantapp.model.FundingOpportunity;
 import com.grantapp.model.GrantApplication;
+import com.grantapp.model.CarsUser;
 import com.grantapp.service.GrantApplicationService;
+import com.grantapp.service.FundingOpportunityService;
+import com.grantapp.service.CarsUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +18,11 @@ import java.util.List;
 public class GrantApplicationController {
     @Autowired
     private GrantApplicationService grantApplicationService;
-
+    @Autowired
+    private FundingOpportunityService fundingOpportunityService;
+    @Autowired
+    private CarsUserService carsUserService;
+    
     @PostMapping("/createGrantApplication")
     public ResponseEntity<GrantApplication> createGrantApplication(@Valid @RequestBody GrantApplication grantApplication) {
         GrantApplication savedApplication = grantApplicationService.save(grantApplication);
@@ -50,6 +57,23 @@ public class GrantApplicationController {
     public List<GrantApplication> getGrantApplicationByUser(@PathVariable Long id) {
         //System.out.println(123);
         return grantApplicationService.findAllByUser_Id(id);
+    }
+    
+    @GetMapping("/getCountApplicationByFundingOpportunity/{id}")
+    public Integer getCountApplicationByFundingOpportunity(
+        @PathVariable("id") Long id,
+        @RequestParam("program") String program,
+        @RequestParam("fiscalyear") int fiscalYear,
+        @RequestParam("userid") Long userid) {
+
+        FundingOpportunity fundingOpportunity = fundingOpportunityService.findById(id);
+        CarsUser user = carsUserService.findById(userid);
+
+        List<FundingOpportunity> opportunities = fundingOpportunityService.findAllByProgram(fundingOpportunity.getProgram());
+        List<GrantApplication> grantApplications = grantApplicationService.findGrantApplicationsByOpportunitiesAndUser(opportunities,user);
+        Integer count = (grantApplications != null) ? grantApplications.size() : 0;
+
+        return count;
     }
 
 }
