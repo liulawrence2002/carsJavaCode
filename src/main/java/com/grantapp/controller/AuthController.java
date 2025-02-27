@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -67,5 +70,20 @@ public class AuthController {
             errorResponse.put("message", e.getMessage());
             return ResponseEntity.status(500).body(errorResponse);
         }
+    }
+
+    @PostMapping("/loginokta")
+    public ResponseEntity<?> login(@AuthenticationPrincipal Jwt jwt) {
+        String username = jwt.getClaimAsString("preferred_username");
+
+        // Generate your own JWT token
+        String token = jwtTokenProvider.createToken(username);
+
+        // Return the token in the response
+        Map<String, String> response = new HashMap<>();
+        response.put("username", username);
+        response.put("token", token);
+
+        return ResponseEntity.ok(response);
     }
 }

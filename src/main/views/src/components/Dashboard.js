@@ -35,52 +35,70 @@ function Dashboard() {
     if (!isLoggedIn) {
         return null; // or a loading spinner, or an empty div to prevent rendering
     }
-
-    return (
-        <div className="container mt-5" style={{ backgroundColor: '#a4bbc1' }}>
-            <h1>Dashboard</h1>
-            <div className="row">
-                {/* My Profile Card */}
-                <div className="col-md-4 mb-4 d-flex">
-                    <Link to="/my-profile" className="w-100 text-decoration-none">
-                        <div className="bg-white p-4 rounded shadow-sm h-100">
-                            <h3>My Profile</h3>
-                            <p className="text-muted">
-                                View or edit your personal information, resumes, and/or your organization.
-                            </p>
-                            <div className="text-primary">Go to My Profile →</div>
-                        </div>
-                    </Link>
-                </div>
-
-                {/* My Applications Card */}
-                <div className="col-md-4 mb-4 d-flex">
-                    <Link to="/my-applications" className="w-100 text-decoration-none">
-                        <div className="bg-white p-4 rounded shadow-sm h-100">
-                            <h3>My Applications</h3>
-                            <p className="text-muted">
-                                View or edit your current applications and past applications.
-                            </p>
-                            <div className="text-primary">Go to My Applications →</div>
-                        </div>
-                    </Link>
-                </div>
-
-                {/* My Grants Card */}
-                <div className="col-md-4 mb-4 d-flex">
-                    <Link to="/my-grants" className="w-100 text-decoration-none">
-                        <div className="bg-white p-4 rounded shadow-sm h-100">
-                            <h3>My Grants</h3>
-                            <p className="text-muted">
-                                View or edit your funded applications and complete required grant workflow forms or documents.
-                            </p>
-                            <div className="text-primary">Go to My Grants →</div>
-                        </div>
-                    </Link>
-                </div>
+  // Function to handle the Workflow Management box click
+  const handleWorkflowClick = () => {
+    navigate('/workflow-management'); // Navigate to the new page
+  };
+  return (
+    <div className="container mt-5" style={{ backgroundColor: '#a4bbc1' }}>
+      <h1>Dashboard</h1>
+      <div className="row">
+        {/* My Profile Card */}
+        <div className="col-md-4 mb-4 d-flex">
+          <Link to="/my-profile" className="w-100 text-decoration-none">
+            <div className="bg-white p-4 rounded shadow-sm h-100">
+              <h3>My Profile</h3>
+              <p className="text-muted">
+                View or edit your personal information, resumes, and/or your organization.
+              </p>
+              <div className="text-primary">Go to My Profile →</div>
             </div>
+          </Link>
         </div>
-    );
+
+        {/* My Applications Card */}
+        <div className="col-md-4 mb-4 d-flex">
+          <Link to="/my-applications" className="w-100 text-decoration-none">
+            <div className="bg-white p-4 rounded shadow-sm h-100">
+              <h3>My Applications</h3>
+              <p className="text-muted">
+                View or edit your current applications and past applications.
+              </p>
+              <div className="text-primary">Go to My Applications →</div>
+            </div>
+          </Link>
+        </div>
+
+        {/* My Grants Card */}
+        <div className="col-md-4 mb-4 d-flex">
+          <Link to="/my-grants" className="w-100 text-decoration-none">
+            <div className="bg-white p-4 rounded shadow-sm h-100">
+              <h3>My Grants</h3>
+              <p className="text-muted">
+                View or edit your funded applications and complete required grant workflow forms or documents.
+              </p>
+              <div className="text-primary">Go to My Grants →</div>
+            </div>
+          </Link>
+        </div>
+
+        {/* Workflow Management Card */}
+        <div className="col-md-4 mb-4 d-flex">
+          <div
+            className="bg-white p-4 rounded shadow-sm h-100 w-100 text-decoration-none"
+            style={{ cursor: 'pointer' }}
+            onClick={handleWorkflowClick}
+          >
+            <h3>Workflow Management</h3>
+            <p className="text-muted">
+              Create and manage workflows using a drag-and-drop interface.
+            </p>
+            <div className="text-primary">Go to Workflow Management →</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 }
 
 export default Dashboard;

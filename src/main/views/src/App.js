@@ -10,6 +10,7 @@ import Dashboard from './components/Dashboard';
 import ViewProposal from './components/ViewProposal';
 import NewsAndAnnouncements from './components/NewsAndAnnouncements';
 import MyApplications from './components/MyApplications';
+import WorkflowManagementPage from './components/WorkflowManagementPage'; // Import the new page
 import { jwtDecode } from 'jwt-decode'; // Import jwtDecode
 
 function App() {
@@ -57,6 +58,7 @@ function App() {
                 <Route path="/view-proposal/:id" element={<ViewProposal />} />
                 <Route path="/news-announcements" element={<NewsAndAnnouncements />} />
                 <Route path="/my-applications" element={<MyApplications />} />
+                <Route path="/workflow-management" element={<WorkflowManagementPage />} /> {/* New route */}
             </Routes>
             <Footer />
         </Router>

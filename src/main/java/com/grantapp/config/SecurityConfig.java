@@ -7,6 +7,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 
 @Configuration
 @EnableWebSecurity
@@ -23,6 +24,10 @@ public class SecurityConfig {
                         .requestMatchers("/api/news/**").permitAll() // Allow access to funding opportunities endpoints
                         .requestMatchers("/api/grant-applications/**").permitAll() // Allow access to funding opportunities endpoints
                         .anyRequest().authenticated() // Require authentication for all other requests
+                /*).oauth2ResourceServer(oauth2 -> oauth2
+                        .jwt(jwt -> jwt
+                                .jwtAuthenticationConverter(new JwtAuthenticationConverter())
+                        )*/
                 );
         return http.build();
     }
