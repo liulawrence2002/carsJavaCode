@@ -32,6 +32,7 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody Map<String, String> credentials) {
+        //testuser Qwerty12
         try {
             String username = credentials.get("username");
             String password = credentials.get("password");

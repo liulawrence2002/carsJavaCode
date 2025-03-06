@@ -53,4 +53,10 @@ insert into [dbo].[news_announcements] ([date],[description],[title])
 insert into [dbo].[news_announcements] ([date],[description],[title])
   values (getdate(), 'New funding annaouced on 12-30-2024 to start RP26-3','CPRIT Started RP26-3')
 
+INSERT INTO [dbo].[cars_user]
+           ([password]
+           ,[username])
+     VALUES
+           ('$2a$10$tyawich6UKIzRGzAHaGB/u6FTupZa0H4mu5ycAlQ/qclkijHId8nu'
+           ,'testuser')
 */
